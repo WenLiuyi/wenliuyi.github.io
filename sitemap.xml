@@ -2,6 +2,24 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://wenliuyi.github.io/posts/48d27dfa.html</loc>
+    
+    <lastmod>2025-03-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://wenliuyi.github.io/posts/34b35821.html</loc>
+    
+    <lastmod>2025-03-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://wenliuyi.github.io/posts/428c6b54.html</loc>
     
     <lastmod>2025-03-21</lastmod>
@@ -21,15 +39,6 @@
   
   <url>
     <loc>http://wenliuyi.github.io/posts/73de9bd.html</loc>
-    
-    <lastmod>2025-03-21</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://wenliuyi.github.io/posts/48d27dfa.html</loc>
     
     <lastmod>2025-03-21</lastmod>
     
@@ -87,17 +96,17 @@
     <priority>0.2</priority>
   </url>
   
-
-  
   <url>
-    <loc>http://wenliuyi.github.io/categories/C-Primer/</loc>
+    <loc>http://wenliuyi.github.io/tags/C/</loc>
     <lastmod>2025-03-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
+
+  
   <url>
-    <loc>http://wenliuyi.github.io/categories/OS/</loc>
+    <loc>http://wenliuyi.github.io/categories/C-Primer/</loc>
     <lastmod>2025-03-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -111,6 +120,13 @@
   </url>
   
   <url>
+    <loc>http://wenliuyi.github.io/categories/OS/</loc>
+    <lastmod>2025-03-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>http://wenliuyi.github.io/categories/C-Primer/Class-Design-Techniques/</loc>
     <lastmod>2025-03-21</lastmod>
     <changefreq>weekly</changefreq>
@@ -118,14 +134,14 @@
   </url>
   
   <url>
-    <loc>http://wenliuyi.github.io/categories/OS/BUAA-OS-lab/</loc>
+    <loc>http://wenliuyi.github.io/categories/Database/CMU-14-445/</loc>
     <lastmod>2025-03-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://wenliuyi.github.io/categories/Database/CMU-14-445/</loc>
+    <loc>http://wenliuyi.github.io/categories/OS/BUAA-OS-lab/</loc>
     <lastmod>2025-03-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
