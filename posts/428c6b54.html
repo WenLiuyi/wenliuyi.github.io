@@ -1,0 +1,338 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>CMU 14-445 Project#0(2024 Fall) C++ Primer | Liuyi Wen's Blog</title><meta name="author" content="Liuyi Wen"><meta name="copyright" content="Liuyi Wen"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Lab0  C++ PrimerPrimer写在开头首先致谢CMU-db无私将这门质量极高、资源极齐全的数据库课程，以及相关基础设施（GradeScope, Discord）和课程资料（Lectures, Notes, Homework）完全开源,让一个在本科数据库课程上只学会了抽象理念和SQL语句的孩子，能踏上一条自学之路（手动狗头）其次,感谢CS自学指南,将计算机领域的众多好课分享给我们. 本">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CMU 14-445 Project#0(2024 Fall) C++ Primer">
+<meta property="og:url" content="http://wenliuyi.github.io/posts/428c6b54.html">
+<meta property="og:site_name" content="Liuyi Wen&#39;s Blog">
+<meta property="og:description" content="Lab0  C++ PrimerPrimer写在开头首先致谢CMU-db无私将这门质量极高、资源极齐全的数据库课程，以及相关基础设施（GradeScope, Discord）和课程资料（Lectures, Notes, Homework）完全开源,让一个在本科数据库课程上只学会了抽象理念和SQL语句的孩子，能踏上一条自学之路（手动狗头）其次,感谢CS自学指南,将计算机领域的众多好课分享给我们. 本">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://wenliuyi.github.io/img/butterfly-icon.png">
+<meta property="article:published_time" content="2025-03-21T11:53:08.000Z">
+<meta property="article:modified_time" content="2025-03-21T12:04:20.013Z">
+<meta property="article:author" content="Liuyi Wen">
+<meta property="article:tag" content="C++">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://wenliuyi.github.io/img/butterfly-icon.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "CMU 14-445 Project#0(2024 Fall) C++ Primer",
+  "url": "http://wenliuyi.github.io/posts/428c6b54.html",
+  "image": "http://wenliuyi.github.io/img/butterfly-icon.png",
+  "datePublished": "2025-03-21T11:53:08.000Z",
+  "dateModified": "2025-03-21T12:04:20.013Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Liuyi Wen",
+      "url": "http://wenliuyi.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://wenliuyi.github.io/posts/428c6b54.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: {"appId":"VE36MEFVE6","apiKey":"f9b9ca5a3cdb9455658600dba6ae7706","indexName":"hexo-algolia indexing key","hitsPerPage":6,"languages":{"input_placeholder":"搜索文章","hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"找到 ${hits} 条结果，耗时 ${time} 毫秒"}},
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'CMU 14-445 Project#0(2024 Fall) C++ Primer',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Liuyi Wen's Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">CMU 14-445 Project#0(2024 Fall) C++ Primer</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div></div></nav><div id="post-info"><h1 class="post-title">CMU 14-445 Project#0(2024 Fall) C++ Primer</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-03-21T11:53:08.000Z" title="发表于 2025-03-21 19:53:08">2025-03-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-03-21T12:04:20.013Z" title="更新于 2025-03-21 20:04:20">2025-03-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Database/">Database</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Database/CMU-14-445/">CMU 14-445</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Database/CMU-14-445/C-Primer/">C++ Primer</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="Lab0-C-PrimerPrimer"><a href="#Lab0-C-PrimerPrimer" class="headerlink" title="Lab0  C++ PrimerPrimer"></a>Lab0  C++ PrimerPrimer</h1><h2 id="写在开头"><a href="#写在开头" class="headerlink" title="写在开头"></a>写在开头</h2><p>首先致谢CMU-db无私将这门质量极高、资源极齐全的数据库课程，以及相关基础设施（GradeScope, Discord）和课程资料（Lectures, Notes, Homework）完全开源,让一个在本科数据库课程上只学会了抽象理念和SQL语句的孩子，能踏上一条自学之路（手动狗头）<br>其次,感谢<a target="_blank" rel="noopener" href="https://csdiy.wiki/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F/15445/">CS自学指南</a>,将计算机领域的众多好课分享给我们.</p>
+<p>本专题将详尽地记录2024 Fall对应Lecture和Lab的学习经历.</p>
+<h3 id="课程链接"><a href="#课程链接" class="headerlink" title="课程链接"></a>课程链接</h3><p><strong>课程主页</strong>:<a target="_blank" rel="noopener" href="https://15445.courses.cs.cmu.edu/fall2024/">https://15445.courses.cs.cmu.edu/fall2024/</a><br><strong>Discord</strong>:<a target="_blank" rel="noopener" href="https://discord.com/channels/724929902075445281/752529819148877904">https://discord.com/channels/724929902075445281/752529819148877904</a><br><strong>Gradescope</strong>:<a target="_blank" rel="noopener" href="https://www.gradescope.com/courses/817458">https://www.gradescope.com/courses/817458</a> Entry Code: <code>WWWJZ5</code> (学校记得改成CMU)</p>
+<blockquote>
+<p>In exchange for making this available to the public, we ask that you DO NOT make your project implementations public on Github or other source code repositories.</p>
+</blockquote>
+<p><strong>让我们开始吧.</strong></p>
+<p>本篇博客记录Lab概览和<code>Project #0</code>.</p>
+<h3 id="Lab概览"><a href="#Lab概览" class="headerlink" title="Lab概览"></a>Lab概览</h3><blockquote>
+<p>以下摘自CS指南:</p>
+</blockquote>
+<p>这门课的亮点在于 <code>CMU Database Group</code> 专门为此课开发了一个教学用的关系型数据库 <code>bustub</code>，并要求你对这个数据库的组成部分进行修改，实现上述部件的功能。</p>
+<p>具体来说，在 <code>15-445</code> 中,你需要在四个 <code>Project</code> 的推进中，实现一个面向磁盘的传统关系型数据库 Bustub 中的部分关键组件。</p>
+<p>包括 <code>Buffer Pool Manager</code> (内存管理), <code>B Plus Tree</code> (存储引擎), <code>Query Executors &amp; Query Optimizer</code> (算子们 &amp; 优化器), <code>Concurrency Control</code> (并发控制)，分别对应 <code>Project #1</code> 到 <code>Project #4</code>。</p>
+<p>值得一提的是，同学们在实现的过程中可以通过 <code>shell.cpp</code> 编译出 <code>bustub-shell</code> 来实时地观测自己实现部件的正确与否，正反馈非常足。</p>
+<p>此外 <code>bustub</code> 作为一个 <code>C++</code> 编写的中小型项目涵盖了程序构建、代码规范、单元测试等众多要求，可以作为一个优秀的开源项目学习。</p>
+<p>本篇从<code>Project #0</code>开始.</p>
+<h3 id="Project-0-2024-Fall"><a href="#Project-0-2024-Fall" class="headerlink" title="Project #0 (2024 Fall)"></a>Project #0 (2024 Fall)</h3><p>2024 Fall的预实验,集中于理解和实现一个基于概率统计的<strong>大数据基数统计</strong>算法–HyperLoglog;在此过程中,熟悉<code>C++</code>的基本应用.</p>
+<p><code>C++</code>的基本知识可见以下两篇博客:<br><a href="/post1/">C++中的引用、移动语义、模板、包装类、迭代器和命名空间</a><br><a href="/post2/">C++标准库：容器、动态内存、同步原语</a></p>
+<p>我们从HyperLogLog的算法理论开始.</p>
+<h4 id="HyperLogLog算法"><a href="#HyperLogLog算法" class="headerlink" title="HyperLogLog算法"></a>HyperLogLog算法</h4><h5 id="什么情景产生了HyperLogLog？"><a href="#什么情景产生了HyperLogLog？" class="headerlink" title="什么情景产生了HyperLogLog？"></a>什么情景产生了HyperLogLog？</h5><p>假设您有一个大型元素数据集，其中包含从一组基数 n 中选择的重复条目，并且想要查找 n，即<strong>基数（不同元素的数量）</strong>。例如，我们希望计算在给定的一周内访问过 Facebook 的不同用户数量，其中每个人每天登录多次。这将产生<strong>具有许多重复项的大型数据集</strong>。显而易见的方法（例如对元素进行排序，或简单地维护所看到的唯一元素集）是不切实际的，因为它们要么计算量太大，要么需要太多内存。如何处理呢？让我们逐步思考：</p>
+<h5 id="一个简单的估计器"><a href="#一个简单的估计器" class="headerlink" title="一个简单的估计器"></a>一个简单的估计器</h5><p>我们需要一个输出估计值的算法（误差在合理范围内）。首先，生成一个具有重复条目的假设数据集如下：</p>
+<ol>
+<li>生成 n 个均匀分布在 0 和 1 之间的数字；</li>
+<li>将一些数字随机复制任意次数；</li>
+<li>对上述数据集，随机排序。<br>使用哈希函数（哈希值被规范化并在 0 和 1 之间均匀分布），设最小的哈希值为$y_{min}&#x3D;hash(x)$，<strong>将唯一条目的数量估计为1&#x2F;y_{min}.</strong><br><img src="/posts/428c6b54/image-4.png"><br>然而，估计结果依赖于最小哈希值，而最小哈希值可能恰好太小，从而夸大了我们的估计。因此该方法具有高度可变性。</li>
+</ol>
+<h5 id="概率计数"><a href="#概率计数" class="headerlink" title="概率计数"></a>概率计数</h5><p>为了减少之前方法中的高可变性，我们可以通过<strong>计算哈希值二进制表示中，开头的零位数</strong>来改进。<br><img src="/posts/428c6b54/image-5.png"><br>平均而言，每$2^k$个不同条目，将出现$k$个连续的零序列，因此转为记录：最长的连续零序列的长度。即：</p>
+<p>集合{${x_1,…,x_M}$}的基数为$2^R$，其中：$R&#x3D;max${$\rho(x_1),…,\rho(x_M)$}，$\rho(x_1)$为$hash(x_i)$的二进制表示中，前导0的数目。</p>
+<p>此方法有两个缺点：</p>
+<ol>
+<li>只能提供基数的 2 的幂估计，即结果只可能是：1，2，4，8，…</li>
+<li>如果恰巧遇到一个有太多连续前导0的条目，将产生极不准确的基数估计。</li>
+</ol>
+<h5 id="提高准确性：LogLog，采用多个估计量"><a href="#提高准确性：LogLog，采用多个估计量" class="headerlink" title="提高准确性：LogLog，采用多个估计量"></a>提高准确性：LogLog，采用多个估计量</h5><p>上一个方法中，只采用了一个估计量，即：最大连续前导零数。为了改进，我们<strong>采用多个独立估计器，并对结果取平均</strong>，以减少单个估计器的方差。<br><img src="/posts/428c6b54/image-6.png"><br>可以通过使用$m$个独立的哈希函数实现这点，分别计算出$R_1,…,R_m$，取算数平均，作为$R$的估计值。</p>
+<p>但是该方法对于每个条目，均需计算其相对于每个哈希函数的哈希值，计算上太昂贵。能不能采用单个哈希函数解决呢？</p>
+<p>学者们提出的一个解决方案是：<strong>使用哈希值的前k位作为桶的索引；计算剩余部分的最长连续 0 序列</strong>。</p>
+<p>如下图，假设我们传入数据的哈希值为<code>1011 011101101100000</code>。</p>
+<ol>
+<li>使用最左边的四个位<code>(k=4)</code>作为桶索引，它告诉我们要更新哪个存储桶（十进制为 &#x3D; 11）；</li>
+<li>在剩余部分中，获取右侧的最长连续 0序列，此时该序列长度为 5；</li>
+<li>因此，使用 16 个存储桶，将存储桶编号 11 更新为值 5，如下所示。<br><img src="/posts/428c6b54/image-7.png"></li>
+</ol>
+<p>通过拥有$m$个桶，我们模拟了拥有$m$个不同哈希函数的情况。基数估计公式如下：</p>
+<p>$CARDINALITY_{LogLog}&#x3D;constant · m · 2^{\frac{1}{m}\sum_{j&#x3D;1}^{N}R_j}$</p>
+<p>对于 m 个桶，这会将估计器的标准误差降低到大约 $\frac{1.3}{\sqrt{m}}$。</p>
+<blockquote>
+<p>对于2048个桶，每个桶5位（最多可以记录32个连续0），则足以记录高达$2^{27}$的基数，只占用2048*5&#x3D;1.2KB的内存（平均错误率大约2.8%）</p>
+</blockquote>
+<p>更多可见以下文章:<br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/110364156">https://zhuanlan.zhihu.com/p/110364156</a></p>
+<h4 id="Lab整体实现思路"><a href="#Lab整体实现思路" class="headerlink" title="Lab整体实现思路"></a>Lab整体实现思路</h4><p>在实际应用中，一些系统将最左侧的 1 位的位置存储在寄存器中（MSB），而另一些系统则存储最右侧连续零的个数（LSB）。在这个项目中：</p>
+<ul>
+<li>Task 1 采用前者;Task 2 采用后者.</li>
+</ul>
+<h5 id="Task-1"><a href="#Task-1" class="headerlink" title="Task 1"></a>Task 1</h5><p><code>HyperLoglog</code>定义如下:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** @brief Cardinality value. */</span>  </span><br><span class="line"><span class="type">size_t</span> cardinality_;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** @brief Number of bits. */</span></span><br><span class="line"><span class="type">int16_t</span> num_bits_;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** @brief Number of Registers. */</span></span><br><span class="line"><span class="type">uint16_t</span> num_registers_;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** @brief Registers. */</span> </span><br><span class="line">std::vector&lt;<span class="type">uint64_t</span>&gt; registers_;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>初始化<code>HyperLogLog&lt;KeyType&gt;::HyperLogLog(int16_t n_bits)</code>传入的<code>n_bits</code>是寄存器索引位数,寄存器总数为<code>2^n_bits</code>.</li>
+<li>将哈希值转为64位二进制表示;</li>
+<li>哈希值表示中:<ul>
+<li>寄存器索引:从高到底的前<code>n_bits</code>位:即<code>[BITSET_CAPACITY-num_bits_, BITSET_CAPACITY-1]</code>;</li>
+<li>计算左侧第一个1的位置,需从:<code>BITSET_CAPACITY - num_bits_ - 1</code>开始,从高位向低位查找;</li>
+</ul>
+</li>
+<li>寄存器当前索引对应元素的更新逻辑:如果”左侧第一个1的位置”比当前元素大,则更新.</li>
+</ul>
+<h5 id="Task2-Presto实现-密集结构"><a href="#Task2-Presto实现-密集结构" class="headerlink" title="Task2 Presto实现:密集结构"></a>Task2 Presto实现:密集结构</h5><p>使用两个桶,即将最右侧连续零的数量这一数据,拆成两部分存储:</p>
+<ul>
+<li><code>Dense Bucket</code>（密集桶）: 一个固定大小的数组，存储最低位的几个比特（leading bits）</li>
+<li><code>Overflow Bucket</code>（溢出桶）: 一个哈希表:键为桶索引(和密集桶索引相同),值为超出密集桶最大容量的高位比特信息，避免溢出。<br><img src="/posts/428c6b54/image-9.png"><br>如上图：如果某个值的二进制表示中，右侧连续<code>0</code>的数量为<code>33</code>，其二进制形式为<code>0100001</code>。在这种情况下，会将其拆分成两部分，首先是3个<code>MSB</code>（最高有效位）<code>010</code>，接着是4个<code>LSB</code>（最低有效位）<code>0001</code>。<code>0001</code>将存储在密集桶（Dense Bucket）中，而<code>MSB</code>部分<code>010</code>将存储在溢出桶（Overflow Bucket）中。</li>
+</ul>
+<p><code>HyperLogLogPresto</code>中定义如下:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** @brief Capacity of the bitset stream. */</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> BITSET_CAPACITY 64</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/** @brief Dense bucket size. */</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DENSE_BUCKET_SIZE 4</span></span><br><span class="line"><span class="comment">/** @brief Overflow bucket size. */</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> OVERFLOW_BUCKET_SIZE 3</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/** @brief Number of leading bits. */</span></span><br><span class="line"><span class="type">int16_t</span> n_leading_bits_;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** @brief Number of Buckets. */</span></span><br><span class="line"><span class="type">uint16_t</span> num_buckets_;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** @brief Structure holding dense buckets (or also known as registers). */</span></span><br><span class="line">std::vector&lt;std::bitset&lt;DENSE_BUCKET_SIZE&gt;&gt; dense_bucket_;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** @brief Structure holding overflow buckets. */</span></span><br><span class="line">std::unordered_map&lt;<span class="type">uint16_t</span>, std::bitset&lt;OVERFLOW_BUCKET_SIZE&gt;&gt; overflow_bucket_;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** @brief Storing cardinality value */</span></span><br><span class="line"><span class="type">uint64_t</span> cardinality_;</span><br></pre></td></tr></table></figure>
+
+<h4 id="关键细节和易错点"><a href="#关键细节和易错点" class="headerlink" title="关键细节和易错点"></a>关键细节和易错点</h4><h5 id="无符号-有符号整型的处理"><a href="#无符号-有符号整型的处理" class="headerlink" title="无符号&#x2F;有符号整型的处理"></a>无符号&#x2F;有符号整型的处理</h5><p>极易出错!!!疯狂踩坑(哭泣).<br>计算<code>cardinality</code>:头文件<code>registers_</code>中声明的是<code>vector&lt;uint64_t&gt;</code>,运用其中的元素<code>reg</code>计算:<code>z += pow(2, -reg);</code></p>
+<p>这里<code>pow(2, -reg)</code>会变成<code>inf</code>,即出现了<strong>整数下溢</strong>的bug.警惕:无符号类型不能为负!</p>
+<p>因此应使用<code>z += 1.0/pow(2, reg);</code></p>
+<h5 id="边界"><a href="#边界" class="headerlink" title="边界"></a>边界</h5><ol>
+<li>样例<code>EdgeTest1</code>测试了构造函数中传入的实参<code>n_bits</code>为负的情况:</li>
+</ol>
+<p>寄存器数目为负数是无意义的.因此构造函数应写为:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HyperLogLog&lt;KeyType&gt;::<span class="built_in">HyperLogLog</span>(<span class="type">int16_t</span> n_bits) : <span class="built_in">cardinality_</span>(<span class="number">0</span>), <span class="built_in">num_bits_</span>(n_bits &gt; <span class="number">0</span> ? n_bits : <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>样例<code>EdgeTest2</code>, <code>PrestoCase2</code>测试了<code>n_bits</code>或<code>n_leading_bits</code>为0的情况:</li>
+</ol>
+<p>这时寄存器数组<code>registers_</code>长度为<code>1&lt;&lt;0=1</code>, 注意计算寄存器索引&#x2F;桶索引时:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int16_t</span> register_index =</span><br><span class="line">      num_bits_ == <span class="number">0</span> ? <span class="number">0</span> : <span class="built_in">static_cast</span>&lt;<span class="type">int16_t</span>&gt;((bset.<span class="built_in">to_ullong</span>()) &gt;&gt; (BITSET_CAPACITY - num_bits_));</span><br><span class="line"><span class="type">int16_t</span> bucket_index =</span><br><span class="line">      n_leading_bits_ == <span class="number">0</span> ? <span class="number">0</span> : <span class="built_in">static_cast</span>&lt;<span class="type">int16_t</span>&gt;((bset.<span class="built_in">to_ullong</span>()) &gt;&gt; (BITSET_CAPACITY - n_leading_bits_));</span><br></pre></td></tr></table></figure>
+<p><code>bset.to_ullong()</code> 返回一个 <code>unsigned long long</code> 类型的值，这个类型通常是 <code>64</code> 位. <code>num_bits_=0</code>时会溢出.</p>
+<h4 id="测试提交流程"><a href="#测试提交流程" class="headerlink" title="测试提交流程"></a>测试提交流程</h4><h5 id="本地测试"><a href="#本地测试" class="headerlink" title="本地测试"></a>本地测试</h5><ol>
+<li>创建开发环境</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">mkdir</span> build</span><br><span class="line">$ <span class="built_in">cd</span> build</span><br><span class="line">$ cmake -DCMAKE_BUILD_TYPE=Debug ..</span><br><span class="line">$ make -j`<span class="built_in">nproc</span>`</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>本地测试</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> build</span><br><span class="line">$ make -j$(<span class="built_in">nproc</span>) hyperloglog_test</span><br><span class="line">$ ./test/hyperloglog_test</span><br></pre></td></tr></table></figure>
+<p><img src="/posts/428c6b54/image-10.png"></p>
+<h5 id="打包"><a href="#打包" class="headerlink" title="打包"></a>打包</h5><ol>
+<li><code>build</code>目录下输入:<code>make submit-p0</code>,生成zip文件;</li>
+<li>到上一层目录,执行<code>python3 gradescope_sign.py</code>,生成打分文件;</li>
+</ol>
+<p>这里会遇到一个问题:<br>压缩包里的内容,正常应该是用于覆盖源文件的两个<code>.h</code>文件和<code>.cpp</code>文件(即我们写的),但压缩包里似乎并不是.</p>
+<p>此时是build打包时出了问题,我们去看看它的<code>Makefile</code>,找到<code>submit-p0</code>对应的文件路径:<br><img src="/posts/428c6b54/image-11.png"><br>去<code>CMakeFiles/submit-p0.dir/build.make</code>里找到真正打包的东西,改成我们想要的:<br><img src="/posts/428c6b54/image-12.png"></p>
+<h5 id="格式检查"><a href="#格式检查" class="headerlink" title="格式检查"></a>格式检查</h5><p>这一步必须,否则不符合标准代码风格,提交到Gradescope也是0分:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">make format</span><br><span class="line">make check-lint</span><br><span class="line">make check-clang-tidy-p0</span><br></pre></td></tr></table></figure>
+<p>记我报过的错:</p>
+<h6 id="变量命名-readability-identifier-naming"><a href="#变量命名-readability-identifier-naming" class="headerlink" title="变量命名(readability-identifier-naming)"></a>变量命名(readability-identifier-naming)</h6><p>根据常见的 C++ 编码规范，变量应该使用小写字母并采用下划线分隔（即蛇形命名法）.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">long</span> <span class="type">double</span> z = <span class="number">0.0</span>;  <span class="comment">// 将 Z 修改为 z</span></span><br><span class="line"><span class="function">std::bitset&lt;OVERFLOW_BUCKET_SIZE&gt; <span class="title">overflow_value</span><span class="params">(num_trailing_zeros &gt;&gt; <span class="number">4</span>)</span></span>;  <span class="comment">// 将 overflow_value_ 修改为 overflow_value</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="类型名重复-modernize-use-auto"><a href="#类型名重复-modernize-use-auto" class="headerlink" title="类型名重复(modernize-use-auto)"></a>类型名重复(modernize-use-auto)</h6><p>原本使用了显式的类型名<code>std::bitset&lt;BITSET_CAPACITY&gt;</code>,而 <code>Clang-Tidy</code> 建议使用 <code>auto</code> 来简化代码,避免显式重复类型名:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> bset = std::<span class="built_in">bitset</span>&lt;BITSET_CAPACITY&gt;(hash);  <span class="comment">// 使用 auto 来推导类型</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="register-与关键字冲突（readability-identifier-naming）"><a href="#register-与关键字冲突（readability-identifier-naming）" class="headerlink" title="register 与关键字冲突（readability-identifier-naming）"></a>register 与关键字冲突（readability-identifier-naming）</h6><p>在 C++ 中，<code>register</code> 是一个关键字，不能作为变量名。因此，<code>register_</code> 是一个不推荐的命名方式;将其修改为 <code>reg</code>:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">long</span> <span class="type">double</span> z = <span class="number">0.0</span>;  <span class="comment">// 修改 Z 为 z</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">auto</span> &amp;reg : registers_) &#123;  <span class="comment">// 修改 register_ 为 reg</span></span><br><span class="line">    <span class="comment">// 其他代码</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h2><p><code>Project#0</code>终于完成啦!为C++的语法特性困扰了好久,呜呜呜.</p>
+<p>不过完成是一个好的开始,继续前进!</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://wenliuyi.github.io">Liuyi Wen</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://wenliuyi.github.io/posts/428c6b54.html">http://wenliuyi.github.io/posts/428c6b54.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="http://wenliuyi.github.io" target="_blank">Liuyi Wen's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/C/">C++</a></div><div class="post-share"><div class="social-share" data-image="/img/butterfly-icon.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/posts/d43f49ad.html" title="C++面向对象程序设计"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">C++面向对象程序设计</div></div><div class="info-2"><div class="info-item-1">本篇隶属C++ Primer中类设计工具专题，当前集中于面向对象程序设计。 什么是面向对象编程？在面向对象编程（缩写为OOP）中，重点是创建程序定义的数据类型，这些数据类型既包含属性，也包含一组定义明确的行为。OOP中的“对象”一词，是指我们可以从此类类型中实例化的对象。面向对象编程的核心理念是：数据抽象，继承和动态绑定。 继承概述基类：位于层次关系中的根部，定义所有类共同的成员变量和成员函数；派生类：通过继承自动接收基类的成员函数和成员变量；可添加想要的其他函数或成员变量。  类派生列表：明确指出当前派生类是从哪个基类继承而来，示例：  1234class Bulk_Quote : public Quote&#123;	// Bulk_Quote继承Quote	public: 		double net_price() const override;&#125;  定义基类和派生类定义基类12345678910111213141516class Quote&#123;public:	Quote()=default;	Quote(cosn std::string...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/posts/d43f49ad.html" title="C++面向对象程序设计"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-21</div><div class="info-item-2">C++面向对象程序设计</div></div><div class="info-2"><div class="info-item-1">本篇隶属C++ Primer中类设计工具专题，当前集中于面向对象程序设计。 什么是面向对象编程？在面向对象编程（缩写为OOP）中，重点是创建程序定义的数据类型，这些数据类型既包含属性，也包含一组定义明确的行为。OOP中的“对象”一词，是指我们可以从此类类型中实例化的对象。面向对象编程的核心理念是：数据抽象，继承和动态绑定。 继承概述基类：位于层次关系中的根部，定义所有类共同的成员变量和成员函数；派生类：通过继承自动接收基类的成员函数和成员变量；可添加想要的其他函数或成员变量。  类派生列表：明确指出当前派生类是从哪个基类继承而来，示例：  1234class Bulk_Quote : public Quote&#123;	// Bulk_Quote继承Quote	public: 		double net_price() const override;&#125;  定义基类和派生类定义基类12345678910111213141516class Quote&#123;public:	Quote()=default;	Quote(cosn std::string...</div></div></div></a><a class="pagination-related" href="/posts/b93a17fc.html" title="C++标准库：容器、动态内存、同步原语"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-17</div><div class="info-item-2">C++标准库：容器、动态内存、同步原语</div></div><div class="info-2"><div class="info-item-1">接上一篇知识。 C++标准库容器std::vector std::vector 是一种动态数组，可以根据需要自动调整大小，能够存储任意类型的元素。  向向量中添加元素 push_back 和 emplace_back 都用于向向量中添加元素。 emplace_back 通常比 push_back 更高效，因为它直接在内存中创建元素，而不需要先构造一个临时对象然后再移动。    12point_vector.push_back(Point(35, 36));  // 使用 push_back 添加元素point_vector.emplace_back(37, 38);  // 使用 emplace_back 添加元素 遍历向量 直接&#x2F;用下标遍历元素  12345std::cout &lt;&lt; &quot;Printing the items in point_vector:\n&quot;;for (size_t i = 0; i &lt; point_vector.size(); ++i) &#123; ...</div></div></div></a><a class="pagination-related" href="/posts/73de9bd.html" title="Hello，world！C++中的引用、移动语义、模板、包装类、迭代器和命名空间"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-17</div><div class="info-item-2">Hello，world！C++中的引用、移动语义、模板、包装类、迭代器和命名空间</div></div><div class="info-2"><div class="info-item-1">前言Hello，world！今天是2025年3月12日，这是我站的第一篇博客，也是我重新踏上自学CS之路的起点！ 回想已流逝的两年半多本科时光，很多课程因为时间紧、任务重，学得像个“快餐式”程序员——知识点匆匆下肚，消化得却不咋样；ppt上的知识点背了一打，实践起来“一问三不知”。猛然发现，自己像个“半成品”，代码写得像“面条”，bug多得像“打地鼠”。 恰逢找到第一个日常实习，初尝真实的工作环境。实习之余决定重启学习，重新修炼“代码内功”。 从哪里开始呢？第一站是C++的基本语法。之前刷算法题时用过C++，每次没有类、没有封装、没有 unit test、没有 Makefile、没有 Git，唯一的优点是它确实能跑，缺点是“能跑”的补集；大三上做过一个4000行代码的Qt小项目，实现简单图像识别与参量的自动化计算（可见：https://github.com/WenLiuyi/fiber_Analysis ）现已经成功打包成exe文件，可在Windows系统执行。但那过程简直像“渡劫”——装了几十个 G 的 Visual Studio，每次打开那笨重的...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Liuyi Wen</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">2</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/WenLiuyi"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Lab0-C-PrimerPrimer"><span class="toc-number">1.</span> <span class="toc-text">Lab0  C++ PrimerPrimer</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E5%BC%80%E5%A4%B4"><span class="toc-number">1.1.</span> <span class="toc-text">写在开头</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%BE%E7%A8%8B%E9%93%BE%E6%8E%A5"><span class="toc-number">1.1.1.</span> <span class="toc-text">课程链接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lab%E6%A6%82%E8%A7%88"><span class="toc-number">1.1.2.</span> <span class="toc-text">Lab概览</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Project-0-2024-Fall"><span class="toc-number">1.1.3.</span> <span class="toc-text">Project #0 (2024 Fall)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#HyperLogLog%E7%AE%97%E6%B3%95"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">HyperLogLog算法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%83%85%E6%99%AF%E4%BA%A7%E7%94%9F%E4%BA%86HyperLogLog%EF%BC%9F"><span class="toc-number">1.1.3.1.1.</span> <span class="toc-text">什么情景产生了HyperLogLog？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E4%BC%B0%E8%AE%A1%E5%99%A8"><span class="toc-number">1.1.3.1.2.</span> <span class="toc-text">一个简单的估计器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%A6%82%E7%8E%87%E8%AE%A1%E6%95%B0"><span class="toc-number">1.1.3.1.3.</span> <span class="toc-text">概率计数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8F%90%E9%AB%98%E5%87%86%E7%A1%AE%E6%80%A7%EF%BC%9ALogLog%EF%BC%8C%E9%87%87%E7%94%A8%E5%A4%9A%E4%B8%AA%E4%BC%B0%E8%AE%A1%E9%87%8F"><span class="toc-number">1.1.3.1.4.</span> <span class="toc-text">提高准确性：LogLog，采用多个估计量</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Lab%E6%95%B4%E4%BD%93%E5%AE%9E%E7%8E%B0%E6%80%9D%E8%B7%AF"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">Lab整体实现思路</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Task-1"><span class="toc-number">1.1.3.2.1.</span> <span class="toc-text">Task 1</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Task2-Presto%E5%AE%9E%E7%8E%B0-%E5%AF%86%E9%9B%86%E7%BB%93%E6%9E%84"><span class="toc-number">1.1.3.2.2.</span> <span class="toc-text">Task2 Presto实现:密集结构</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E7%BB%86%E8%8A%82%E5%92%8C%E6%98%93%E9%94%99%E7%82%B9"><span class="toc-number">1.1.3.3.</span> <span class="toc-text">关键细节和易错点</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%97%A0%E7%AC%A6%E5%8F%B7-%E6%9C%89%E7%AC%A6%E5%8F%B7%E6%95%B4%E5%9E%8B%E7%9A%84%E5%A4%84%E7%90%86"><span class="toc-number">1.1.3.3.1.</span> <span class="toc-text">无符号&#x2F;有符号整型的处理</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%BE%B9%E7%95%8C"><span class="toc-number">1.1.3.3.2.</span> <span class="toc-text">边界</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E6%8F%90%E4%BA%A4%E6%B5%81%E7%A8%8B"><span class="toc-number">1.1.3.4.</span> <span class="toc-text">测试提交流程</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E6%B5%8B%E8%AF%95"><span class="toc-number">1.1.3.4.1.</span> <span class="toc-text">本地测试</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%89%93%E5%8C%85"><span class="toc-number">1.1.3.4.2.</span> <span class="toc-text">打包</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%A0%BC%E5%BC%8F%E6%A3%80%E6%9F%A5"><span class="toc-number">1.1.3.4.3.</span> <span class="toc-text">格式检查</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%8F%98%E9%87%8F%E5%91%BD%E5%90%8D-readability-identifier-naming"><span class="toc-number">1.1.3.4.3.1.</span> <span class="toc-text">变量命名(readability-identifier-naming)</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E5%90%8D%E9%87%8D%E5%A4%8D-modernize-use-auto"><span class="toc-number">1.1.3.4.3.2.</span> <span class="toc-text">类型名重复(modernize-use-auto)</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#register-%E4%B8%8E%E5%85%B3%E9%94%AE%E5%AD%97%E5%86%B2%E7%AA%81%EF%BC%88readability-identifier-naming%EF%BC%89"><span class="toc-number">1.1.3.4.3.3.</span> <span class="toc-text">register 与关键字冲突（readability-identifier-naming）</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E5%B0%BE"><span class="toc-number">1.2.</span> <span class="toc-text">结尾</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/428c6b54.html" title="CMU 14-445 Project#0(2024 Fall) C++ Primer">CMU 14-445 Project#0(2024 Fall) C++ Primer</a><time datetime="2025-03-21T11:53:08.000Z" title="发表于 2025-03-21 19:53:08">2025-03-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/d43f49ad.html" title="C++面向对象程序设计">C++面向对象程序设计</a><time datetime="2025-03-21T01:57:08.000Z" title="发表于 2025-03-21 09:57:08">2025-03-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/48d27dfa.html" title="BUAA-OS Lab1 实验笔记">BUAA-OS Lab1 实验笔记</a><time datetime="2025-03-18T07:08:53.000Z" title="发表于 2025-03-18 15:08:53">2025-03-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/b93a17fc.html" title="C++标准库：容器、动态内存、同步原语">C++标准库：容器、动态内存、同步原语</a><time datetime="2025-03-17T10:47:13.000Z" title="发表于 2025-03-17 18:47:13">2025-03-17</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/73de9bd.html" title="Hello，world！C++中的引用、移动语义、模板、包装类、迭代器和命名空间">Hello，world！C++中的引用、移动语义、模板、包装类、迭代器和命名空间</a><time datetime="2025-03-17T10:34:32.000Z" title="发表于 2025-03-17 18:34:32">2025-03-17</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By Liuyi Wen</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const commentCount = n => {
+    const isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+    if (isCommentCount) {
+      isCommentCount.textContent= n
+    }
+  }
+
+  const initGitalk = (el, path) => {
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyGitalk = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+
+    const gitalk = new Gitalk({
+      clientID: 'Ov23liV5E779I5xTmpUl',
+      clientSecret: '78821186b2292635cab237f3d6b76ccf20e56d1d',
+      repo: 'wenliuyi.github.io',
+      owner: 'WenLiuyi',
+      admin: ['WenLiuyi'],
+      updateCountCallback: commentCount,
+      ...option,
+      id: isShuoshuo ? path : (option && option.id) || 'db7124200e59788aacb4ed913ff27413'
+    })
+
+    gitalk.render('gitalk-container')
+  }
+
+  const loadGitalk = async(el, path) => {
+    if (typeof Gitalk === 'function') initGitalk(el, path)
+    else {
+      await btf.getCSS('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css')
+      await btf.getScript('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js')
+      initGitalk(el, path)
+    }
+  }
+
+  if (isShuoshuo) {
+    'Gitalk' === 'Gitalk'
+      ? window.shuoshuoComment = { loadComment: loadGitalk }
+      : window.loadOtherComment = loadGitalk
+    return
+  }
+
+  if ('Gitalk' === 'Gitalk' || !true) {
+    if (true) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+    else loadGitalk()
+  } else {
+    window.loadOtherComment = loadGitalk
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="algolia-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="search-wrap"><div id="algolia-search-input"></div><hr/><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-info"><div class="algolia-stats"></div><div class="algolia-poweredBy"></div></div></div></div></div><div id="search-mask"></div><script src="https://cdn.jsdelivr.net/npm/algoliasearch/dist/lite/builds/browser.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instantsearch.js/dist/instantsearch.production.min.js"></script><script src="/js/search/algolia.js"></script></div></div></body></html>
